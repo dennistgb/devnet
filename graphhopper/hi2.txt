@@ -1,0 +1,11 @@
+
++++++++++++++++++++++++++++++++++++++++++++++
+Vehicle profiles available on Graphhopper:
++++++++++++++++++++++++++++++++++++++++++++++
+car, bike, foot
++++++++++++++++++++++++++++++++++++++++++++++
+Enter a vehicle profile from the list above: No valid vehicle profile was entered. Using the car profile.
+Starting Location: Geocoding API URL for London, England, United Kingdom (Location Type: city)
+https://graphhopper.com/api/1/geocode?q=l&limit=1&key=8f15d6a0-daf5-4264-826f-ac6bbcc402c7
+(200, 51.5074456, -0.1277653, 'London, England, United Kingdom')
+Ending Location: 

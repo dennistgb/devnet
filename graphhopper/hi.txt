@@ -1,0 +1,8 @@
+
++++++++++++++++++++++++++++++++++++++++++++++
+Vehicle profiles available on Graphhopper:
++++++++++++++++++++++++++++++++++++++++++++++
+car, bike, foot
++++++++++++++++++++++++++++++++++++++++++++++
+Enter a vehicle profile from the list above: No valid vehicle profile was entered. Using the car profile.
+Starting Location: 
