@@ -1,0 +1,105 @@
+---
+Metadata:
+  AWSToolsMetrics:
+    IaC_Generator: "arn:aws:cloudformation:us-east-1:556884923646:generatedTemplate/7cb5a1d2-47c0-4a54-97cb-37d235dc4e02"
+Resources:
+  KMSKey:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::KMS::Key"
+    DeletionPolicy: "Retain"
+    Properties:
+      Origin: "AWS_KMS"
+      MultiRegion: false
+      Description: "Default key that protects my RDS database volumes when no other\
+        \ key is defined"
+      KeyPolicy:
+        Version: "2012-10-17"
+        Statement:
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "556884923646"
+              kms:ViaService: "rds.us-east-1.amazonaws.com"
+          Resource: "*"
+          Action:
+          - "kms:Encrypt"
+          - "kms:Decrypt"
+          - "kms:ReEncrypt*"
+          - "kms:GenerateDataKey*"
+          - "kms:CreateGrant"
+          - "kms:ListGrants"
+          - "kms:DescribeKey"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow access through RDS for all principals in the account that are\
+            \ authorized to use RDS"
+        - Resource: "*"
+          Action:
+          - "kms:Describe*"
+          - "kms:Get*"
+          - "kms:List*"
+          - "kms:RevokeGrant"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::556884923646:root"
+          Sid: "Allow direct access to key metadata to the account"
+        Id: "auto-rds-2"
+      KeySpec: "SYMMETRIC_DEFAULT"
+      Enabled: true
+      EnableKeyRotation: true
+      KeyUsage: "ENCRYPT_DECRYPT"
+      Tags: []
+  RDSDBInstance:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::RDS::DBInstance"
+    DeletionPolicy: "Retain"
+    Properties:
+      DatabaseInsightsMode: "standard"
+      StorageEncrypted: true
+      AssociatedRoles: []
+      Port: "3306"
+      ProcessorFeatures: []
+      StorageThroughput: 125
+      PreferredBackupWindow: "08:40-09:10"
+      MonitoringInterval: 0
+      DBParameterGroupName: "default.mysql8.0"
+      NetworkType: "IPV4"
+      DedicatedLogVolume: false
+      CopyTagsToSnapshot: true
+      MultiAZ: true
+      Engine: "mysql"
+      Tags: []
+      EngineLifecycleSupport: "open-source-rds-extended-support-disabled"
+      LicenseModel: "general-public-license"
+      EngineVersion: "8.0.42"
+      StorageType: "gp3"
+      KmsKeyId:
+        Fn::GetAtt:
+        - "KMSKey"
+        - "Arn"
+      DBInstanceClass: "db.t3.micro"
+      AvailabilityZone: "us-east-1a"
+      OptionGroupName: "default:mysql-8-0"
+      PreferredMaintenanceWindow: "mon:05:15-mon:05:45"
+      EnablePerformanceInsights: false
+      AutoMinorVersionUpgrade: true
+      DBSubnetGroupName: "c160547a4117966l10964688t1w556884923646-dbsubnetgroup-ewmoib5tnuyu"
+      DeletionProtection: true
+      Iops: 3000
+      DBInstanceIdentifier: "p2319782-db"
+      AllocatedStorage: "20"
+      BackupTarget: "region"
+      CACertificateIdentifier: "rds-ca-rsa2048-g1"
+      ManageMasterUserPassword: true
+      MasterUserSecret:
+        KmsKeyId: "arn:aws:kms:us-east-1:556884923646:key/766ec60c-ecc6-4298-ae5b-231748b936c4"
+      VPCSecurityGroups:
+      - "sg-0498fe3ffcc3bb3b8"
+      DBSecurityGroups: []
+      MasterUsername: "admin"
+      MaxAllocatedStorage: 1000
+      DBName: "countries"
+      EnableIAMDatabaseAuthentication: false
+      PubliclyAccessible: false
+      BackupRetentionPeriod: 7
+      EnableCloudwatchLogsExports: []
